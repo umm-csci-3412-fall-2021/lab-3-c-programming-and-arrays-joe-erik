@@ -1,5 +1,14 @@
 #include "mergesort.h"
 
+
+/**
+ * Average two integers without overflowing.
+ */
+int safe_average(int a, int b) {
+    // Source: https://www.geeksforgeeks.org/compute-average-two-numbers-without-overflow/
+    return a / 2 + b / 2 + (a % 2 + b % 2) / 2;
+}
+
 /**
  * The "merge" step of the merge sort, where we join two sorted subarrays into
  * one big sorted subarray.
@@ -65,9 +74,7 @@ void mergesortRange(int start, int end, int values[]) {
         // There's one or fewer elements in the range, so it's already sorted.
         return;
     } else {
-        // We won't worry about overflow errors; that's beyond the scope of
-        // this lab.
-        int midpoint = (end + start) / 2;
+        int midpoint = safe_average(start, end);
         mergesortRange(start, midpoint, values);
         mergesortRange(midpoint, end, values);
         mergeRanges(start, midpoint, end, values);
