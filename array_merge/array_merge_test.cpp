@@ -18,6 +18,7 @@ TEST(ArrayMerge, Handle_empty_list) {
 
   result = array_merge(0, sizes,  a);
   arrays_match(1, result, expected);
+  free(result);
 }
 
 TEST(ArrayMerge, Handle_singleton_list) {
@@ -30,6 +31,7 @@ TEST(ArrayMerge, Handle_singleton_list) {
 
   result = array_merge(num_arrays, sizes, a);
   arrays_match(2, result, expected);
+  free(result);
 }
 
 TEST(ArrayMerge, Handle_one_longer_list) {
@@ -42,6 +44,7 @@ TEST(ArrayMerge, Handle_one_longer_list) {
 
   result = array_merge(num_arrays, sizes, a);
   arrays_match(8, result, expected);
+  free(result);
 }
 
 TEST(ArrayMerge, Handle_multiple_copies_of_longer_list) {
@@ -54,6 +57,7 @@ TEST(ArrayMerge, Handle_multiple_copies_of_longer_list) {
 
   result = array_merge(num_arrays, sizes, a);
   arrays_match(8, result, expected);
+  free(result);
 }
 
 TEST(ArrayMerge, Handle_multiple_copies_of_longer_list_different_orders) {
@@ -63,11 +67,12 @@ TEST(ArrayMerge, Handle_multiple_copies_of_longer_list_different_orders) {
   int a1[] = { 5, 8, 9, 3, 2, 0, 6, 378293, 2, 0 };
   int a2[] = { 8, -52857, 0, 2, 3, 0, 2, 3, 6, 9 };
   int* a[] = { a0, a1, a2, a0, a1, a2, a0, a1, a2 };
-  int expected[] = { 7, -52857, -22345, 0, 2, 3, 5, 6, 8, 9, 378293 };
+  int expected[] = { 10, -52857, -22345, 0, 2, 3, 5, 6, 8, 9, 378293 };
   int* result;
 
   result = array_merge(num_arrays, sizes, a);
-  arrays_match(8, result, expected);
+  arrays_match(11, result, expected);
+  free(result);
 }
 
 TEST(ArrayMerge, Handle_different_sizes) {
@@ -88,6 +93,11 @@ TEST(ArrayMerge, Handle_different_sizes) {
 
   result = array_merge(num_arrays, sizes, a);
   arrays_match(11, result, expected);
+  
+  free(result);
+  for(i = 0; i < num_arrays; i++) {
+    free(a[i]);
+  }
 }
 
 TEST(ArrayMerge, Handle_different_sizes_reversed) {
@@ -108,6 +118,11 @@ TEST(ArrayMerge, Handle_different_sizes_reversed) {
 
   result = array_merge(num_arrays, sizes, a);
   arrays_match(11, result, expected);
+
+  free(result);
+  for(i = 0; i < num_arrays; i++) {
+    free(a[i]);
+  }
 }
 
 int main(int argc, char* argv[]) {
