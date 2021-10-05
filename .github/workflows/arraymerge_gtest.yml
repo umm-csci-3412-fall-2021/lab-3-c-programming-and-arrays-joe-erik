@@ -24,7 +24,7 @@ jobs:
     - name: Check out the code
       uses: actions/checkout@v2
     - name: Compile test code
-      run: g++ -Wall -g -o array_merge_test array_merge.c array_merge_test.cpp -lgtest -pthread -std=c++0x
+      run: g++ -Wall -g -o array_merge_test array_merge.c array_merge_test.cpp ../mergesort/mergesort.c -lgtest -pthread -std=c++0x
       working-directory: array_merge
     - name: Run test
       run: ./array_merge_test
